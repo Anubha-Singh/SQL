@@ -23,10 +23,19 @@ For example, given the above Scores table, your query should generate the follow
 | 3.50  | 4    |
 +-------+------+
 
-//My Solution
+//My Solution1
 
 Select Scores.Score, count(ranking.Score) as 'Rank'
 from Scores, (select distinct Score from Scores) ranking
 where ranking.Score>=Scores.Score
 group by Scores.Id
 order by Scores.Score desc;
+
+//My Solution2
+SELECT
+    Score,
+    DENSE_RANK() OVER (
+        ORDER BY Score DESC
+    ) 'Rank'
+FROM
+    Scores;
